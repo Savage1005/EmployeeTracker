@@ -31,9 +31,9 @@ function startPrompt() {
             case "Add Department":
                 addDepartment();
                 break;
-            // case "Add Role":
-            //     addRole();
-            //     break;
+            case "Add Role":
+                addRole();
+                break;
             // case "Add Employee":
             //     addEmployee();
             //     break;
@@ -70,6 +70,33 @@ function addDepartment(){
             startPrompt(); 
     })
 });
+}
+
+function addRole(){
+    inquirer.prompt({
+        type: "input",
+        message: "Enter the name of the role to be added:", 
+        name: "nameRole"    
+    },
+    {
+        type: "input",
+        message: "Enter the salary of the role: ",
+        name: "roleSalary"
+    },
+    {
+        type: "input",
+        message: "Enter the department id number: ",
+        name: "idNum"
+    }).then (function(answer){
+        connection.query("INSERT INTO role (title, salary, department_id) VALUES (?,?,?)",
+        [answer.nameRole, answer.roleSalary, answer.idNum],
+        function (err, res){
+            if (err) throw err;
+            console.table(res);
+            console.log("Role Added");
+            startPrompt();
+        });
+    });
 }
 
 function exit(){
