@@ -37,15 +37,15 @@ function startPrompt() {
             case "Add Employee":
                 addEmployee();
                 break;
-            // case "View Departments":
-            //     viewDepartments();
-            //     break;
-            // case "View Roles":
-            //     viewRoles();
-            //     break;
-            // case "View Employees":
-            //     viewEmployees();
-            //     break;
+            case "View Departments":
+                viewDepartments();
+                break;
+            case "View Roles":
+                viewRoles();
+                break;
+            case "View Employees":
+                viewEmployees();
+                break;
             // case "Update Employee Role":
             //     updateEmployeeRole();
             //     break;
@@ -131,6 +131,31 @@ function addEmployee(){
         });
     });
 }
+
+function viewRoles(){
+ connection.query("SELECT * FROM role", function (err, res){
+     if (err) throw err;
+     console.table(res);
+     startPrompt();
+ })}
+
+ function viewDepartments(){
+    connection.query("SELECT * FROM department", function (err, res){
+        if (err) throw err;
+        console.table(res);
+        startPrompt();
+    })}
+
+function viewEmployees(){
+    connection.query("SELECT * FROM employee", function (err, res){
+        if (err) throw err;
+        console.table(res);
+        startPrompt();
+    })}
+
+
+
+
 
 function exit(){
     connection.end();
