@@ -34,9 +34,9 @@ function startPrompt() {
             case "Add Role":
                 addRole();
                 break;
-            // case "Add Employee":
-            //     addEmployee();
-            //     break;
+            case "Add Employee":
+                addEmployee();
+                break;
             // case "View Departments":
             //     viewDepartments();
             //     break;
@@ -94,6 +94,39 @@ function addRole(){
             if (err) throw err;
             console.table(res);
             console.log("Role Added");
+            startPrompt();
+        });
+    });
+}
+
+function addEmployee(){
+    inquirer.prompt({
+        type: "input",
+        message: "Enter the first name of the Employee:", 
+        name: "firstName"    
+    },
+    {
+        type: "input",
+        message: "Enter the last name of the Employee: ",
+        name: "lastName"
+    },
+    {
+        type: "input",
+        message: "Enter the employee's role ID: ",
+        name: "roleId"
+    },
+    {
+        type: "input",
+        message: "Enter the manager ID: ",
+        name: "managerId"
+    }
+    ).then (function(answer){
+        connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)",
+        [answer.firstName, answer.lastName, answer.roleId, answer.managerId],
+        function (err, res){
+            if (err) throw err;
+            console.table(res);
+            console.log("Employee Added");
             startPrompt();
         });
     });
